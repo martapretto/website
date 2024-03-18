@@ -1,0 +1,150 @@
+---
+title: "La mia pagina web"
+format: 
+  html:
+    theme: minty
+    toc: true
+    toc-title: Menu dei contenuti
+    toc-location: right
+    toc-depth: 100
+lang: it
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+
+data(mtcars) # environment di RMarkdown con RMarkdown
+data = mtcars
+
+hook_output <- knitr::knit_hooks$get("output")  # funzione da prendere così, se la si mette nel setup e poi si mette out.lines= nel chunk di interesse, viene visualizzato solo il n di righe richiesto, con i 3 puntini sotto che indicano che i risultati in realtà sarebbero di più (con head questi puntini non ci sono)
+knitr::knit_hooks$set(output = function(x, options) {
+     if (!is.null(n <- options$out.lines)) {
+         x <- xfun::split_lines(x)
+         if (length(x) > n) {
+             # truncate the output
+             x <- c(head(x, n), "....\n")
+         }
+         x <- paste(x, collapse = "\n")
+     }
+     hook_output(x, options)
+ })
+```
+
+
+
+# Quarto
+Ciao amici in @fig-prima
+
+```{r}
+#| echo: false
+#| eval: true
+#| comment: "=)"
+#| fig-cap: "Un'immagine illustrativa di psicologia"
+#| label: fig-prima
+knitr::include_graphics("imgquarto/psicologia.jpg")
+```
+
+
+<br> </br>
+
+Queste sono delle colonne create con columns
+
+:::: {.columns}
+
+::: {.column width="30%"}
+## Classifica delle auto a gasolio
+
+Le nuove auto ***\color{orange}{a gasolio}*** \normalcolor presentate nel 2022 non sono molte e questo limita anche il numero delle vetture diesel provate per i consumi reali. Fra le tre diesel testate, tutte marchiate con la Stella, vince la ***Mercedes Classe A*** col 2.0 diesel da 116 CV che ottiene una lusinghiera media di 3,85 l/100 km (25,97 km/l).
+
+Leggermente staccate sono:
+
+- la Mercedes Classe C diesel mild hybrid spinta dal 2.0 da 200+20 CV (4,20 l/100 km - 23,81 km/l)
+- la Mercedes GLC diesel mild hybrid con 197+23 CV totali (4,25 l/100 km - 23,53 km/l).
+:::
+
+::: {.column width="30%"}
+## Classifica delle auto a GPL
+
+Ecco alcuni dettagli[^1] sulle auto \color{orange}***a GPL*** \normalcolor.
+
+I dettagli non sono esaustivi. Controllare questa \color{blue}[pagina web](https://it.motor1.com/reviews/628701/consumi-reali-classifica-2022-alimentazione/) \normalcolor per maggiori informazioni: 
+
+Come detto, la ***Nissan Micra*** 1.0 da 90 CV diventa l'auto a Gpl più efficiente nella storia della prova consumi reali [@rinaldi_language_2014], con una media di 5,50 l/100 km (18,18 km/l) e una spesa di soli 16,81 euro per il gas necessario al viaggio di 360 km.
+:::
+
+::: {.column width="30%"}
+## Classifica delle auto elettriche
+
+Come detto, la Nissan Micra 1.0 da 90 CV diventa l'auto a Gpl più efficiente nella storia della prova consumi reali, con una media di 5,50 l/100 km (18,18 km/l) e una spesa di soli 16,81 euro per il gas necessario al viaggio di 360 km.
+
+Poco lontana troviamo la sorprendente Hyundai Bayon col motore 1.2 Gpl da 81,8 CV (5,85 l/100 km - 17,09 km/l), mentre la terza in classifica è la Dacia Jogger TCe 100 Gpl col 1.0 turbo da 101 CV (6,80 l/100 km - 14,71 km/l).
+:::
+
+::::
+
+
+
+
+<br> </br>
+
+Queste sono delle colonne create con grid
+
+::: {.grid}
+
+::: {.g-col-4}
+## Classifica delle auto a gasolio
+
+Le nuove auto ***\color{orange}{a gasolio}*** \normalcolor presentate nel 2022 non sono molte e questo limita anche il numero delle vetture diesel provate per i consumi reali. Fra le tre diesel testate, tutte marchiate con la Stella, vince la ***Mercedes Classe A*** col 2.0 diesel da 116 CV che ottiene una lusinghiera media di 3,85 l/100 km (25,97 km/l).
+
+Leggermente staccate sono:
+
+- la Mercedes Classe C diesel mild hybrid spinta dal 2.0 da 200+20 CV (4,20 l/100 km - 23,81 km/l)
+- la Mercedes GLC diesel mild hybrid con 197+23 CV totali (4,25 l/100 km - 23,53 km/l).
+:::
+
+::: {.g-col-4}
+## Classifica delle auto a GPL
+
+Ecco alcuni dettagli sulle auto \color{orange}***a GPL*** \normalcolor.
+
+Come detto, la ***Nissan Micra***[^3] 1.0 da 90 CV diventa l'auto a Gpl più efficiente nella storia della prova consumi reali [@rinaldi_language_2014], con una media di 5,50 l/100 km (18,18 km/l) e una spesa di soli 16,81 euro per il gas necessario al viaggio di 360 km.
+:::
+
+::: {.g-col-4}
+## Classifica delle auto elettriche
+
+Come detto, la Nissan Micra 1.0 da 90 CV diventa l'auto a Gpl più efficiente nella storia della prova consumi reali, con una media di 5,50 l/100 km (18,18 km/l) e una spesa di soli 16,81 euro per il gas necessario al viaggio di 360 km.
+
+Poco lontana troviamo la sorprendente Hyundai Bayon col motore 1.2 Gpl da 81,8 CV (5,85 l/100 km - 17,09 km/l), mentre la terza in classifica è la Dacia Jogger TCe 100 Gpl col 1.0 turbo da 101 CV (6,80 l/100 km - 14,71 km/l).
+:::
+
+:::
+
+
+
+Ecco qui invece dei tabset.
+
+::: {.panel-tabset}
+
+## Introduzione
+In questo caso vogliamo osservare i dati della pressione.
+
+## I dati
+
+```{r}
+#| results: 'asis'
+#| echo: FALSE
+#| message: FALSE
+library("stargazer")
+stargazer(data, type="html", summary = TRUE, 
+          title= "Tabella di summary", digits = 3, header=FALSE, 
+          notes = "Questa è una tabella di summary con stargazer", notes.align= "l")
+```
+
+## Il grafico
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+:::
